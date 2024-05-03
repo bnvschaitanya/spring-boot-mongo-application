@@ -1,0 +1,9 @@
+#Create a docker network
+docker network create mynetwork
+
+
+#Create MongoDB Container with variables
+docker run -d --network mynetwork --name mymongodb       -e MONGO_INITDB_ROOT_USERNAME=admin     -e MONGO_INITDB_ROOT_PASSWORD=mypassword mongo
+
+#Create Springboot application with MongoDB Container Attachment
+docker run -d -p 8080:8080 -e MONGO_DB_HOSTNAME=mymongodb -e MONGO_DB_USERNAME=admin -e MONGO_DB_PASSWORD=mypassword --network mynetwork spring-boot-application:latest
